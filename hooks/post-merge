@@ -3,12 +3,15 @@
 # vars
 datetime="todo"
 if [ -z "$PS_PROJ_USER" ]; then
+	echo "Variable PS_PROJ_USER is not set, using default value."
 	PS_PROJ_USER="PS"
 fi
 if [ -z "$PS_PROJ_PASS" ]; then
+	echo "Variable PS_PROJ_PASS is not set, using default value."
 	PS_PROJ_PASS="PS"
 fi
 if [ -z "$PS_PROJ_DB" ]; then
+	echo "Variable PS_PROJ_DB is not set, using default value."
 	PS_PROJ_DB="PSFTDB"
 fi
 
