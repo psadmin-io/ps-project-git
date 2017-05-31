@@ -1,0 +1,6 @@
+# logs
+logs/*
+
+# projects
+projects/*
+!projects/README.md

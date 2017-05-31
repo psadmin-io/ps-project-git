@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# vars
+. config.sh
+datetime=""
+prjname="IO_IBSRVOPP_ACM"
+logname="$prjname-MERGE-$datetime.log"
+
+# import project into DB
+cmd.exe /c "PSIDE.EXE -HIDE -PJFF $prjname -FP ./projects -CT ORACLE -CD PSFTDB -CO $PS_PROJ_USER -CP $PS_PROJ_PASS -QUIT -LF .logs/$logname"

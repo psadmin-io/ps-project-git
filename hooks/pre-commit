@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# vars
+datetime=$(date)
+PS_PROJ_USER="PS"
+PS_PROJ_PASS="PS"
+proj="IO_TEST"
+logname="$proj-COMMIT-$datetime.log"
+
+# export project from DB
+cmd.exe /c "PSIDE.EXE -HIDE -PJTF $proj -FP ../ -CT ORACLE -CD PSFTDB -CO $PS_PROJ_USER -CP $PS_PROJ_PASS -QUIT -LF ../logs/$logname"
+
+# set flag for post-commit
+echo 
+touch .commit 
+exit

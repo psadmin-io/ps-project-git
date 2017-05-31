@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# add all project changes to current commit
+echo
+prjdir="projects"
+if [ -a .commit ]
+    then
+    rm .commit
+    git add $prjdir
+    git commit --amend -C HEAD --no-verify
+fi
+exit
