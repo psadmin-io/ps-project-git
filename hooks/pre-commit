@@ -2,9 +2,15 @@
 
 # vars
 datetime="todo"
-if [ -z "$PS_PROJ_USER" ]; then; PS_PROJ_USER="PS"; fi
-if [ -z "$PS_PROJ_PASS" ]; then; PS_PROJ_PASS="PS"; fi
-if [ -z "$PS_PROJ_DB" ]; then; PS_PROJ_DB="PSFTDB"; fi
+if [ -z "$PS_PROJ_USER" ]; then
+	PS_PROJ_USER="PS"
+fi
+if [ -z "$PS_PROJ_PASS" ]; then
+	PS_PROJ_PASS="PS"
+fi
+if [ -z "$PS_PROJ_DB" ]; then
+	PS_PROJ_DB="PSFTDB"
+fi
 
 # find project dirs
 projs=($(find . -maxdepth 1 -type d | cut -c 3-))
