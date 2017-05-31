@@ -1,14 +1,19 @@
 #!/bin/sh
 
 # vars
-datetime=$(date)
-PS_PROJ_USER="PS"
-PS_PROJ_PASS="PS"
-proj="IO_TEST"
-logname="$proj-COMMIT-$datetime.log"
+datetime="todo"
+if [ -z "$PS_PROJ_USER" ]; then; PS_PROJ_USER="PS"; fi
+if [ -z "$PS_PROJ_PASS" ]; then; PS_PROJ_PASS="PS"; fi
+if [ -z "$PS_PROJ_DB" ]; then; PS_PROJ_DB="PSFTDB"; fi
 
-# export project from DB
-cmd.exe /c "PSIDE.EXE -HIDE -PJTF $proj -FP ../ -CT ORACLE -CD PSFTDB -CO $PS_PROJ_USER -CP $PS_PROJ_PASS -QUIT -LF ../logs/$logname"
+# find project dirs
+projs=($(find . -maxdepth 1 -type d | cut -c 3-))
+# export projects from DB
+for proj in ${projs[@]}
+do
+	logname="$proj-COMMIT-$datetime.log"
+	cmd.exe /c "PSIDE.EXE -HIDE -PJTF $proj -FP . -CT ORACLE -CD $PS_PROJ_DB -CO $PS_PROJ_USER -CP $PS_PROJ_PASS -QUIT -LF ../logs/$logname"
+done
 
 # set flag for post-commit
 echo 
