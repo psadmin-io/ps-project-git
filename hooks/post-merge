@@ -21,5 +21,5 @@ projs=($(find . -maxdepth 1 -type d | cut -c 3-))
 for proj in ${projs[@]}
 do
 	logname="$proj-MERGE-$datetime.log"
-	cmd.exe /c "PSIDE.EXE -HIDE -PJFF $proj -FP . -CT ORACLE -CD $PS_PROJ_DB -CO $PS_PROJ_USER -CP $PS_PROJ_PASS -QUIT -LF ../logs/$logname"
+	cmd.exe /c "PSIDE.EXE -HIDE -PJFF $proj -FP . -CT ORACLE -CD $PS_PROJ_DB -CO $PS_PROJ_USER -CP $PS_PROJ_PASS -QUIT -LF ../../logs/$logname"
 done
