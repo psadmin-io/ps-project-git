@@ -1,30 +1,35 @@
 #!/bin/sh
 
+echo "Exporting projects from DB into repo"
+echo ""
 # vars
 datetime="todo"
 if [ -z "$PS_PROJ_USER" ]; then
-	echo "Variable PS_PROJ_USER is not set, using default value."
 	PS_PROJ_USER="PS"
+	echo "  Variable PS_PROJ_USER is not set, using default value '$PS_PROJ_USER'."
 fi
 if [ -z "$PS_PROJ_PASS" ]; then
-	echo "Variable PS_PROJ_PASS is not set, using default value."
 	PS_PROJ_PASS="PS"
+	echo "  Variable PS_PROJ_PASS is not set, using default value '$PS_PROJ_PASS'."
 fi
 if [ -z "$PS_PROJ_DB" ]; then
-	echo "Variable PS_PROJ_DB is not set, using default value."
 	PS_PROJ_DB="PSFTDB"
+	echo "  Variable PS_PROJ_DB is not set, using default value '$PS_PROJ_DB'."
 fi
 
 # find project dirs
-projs=($(find . -maxdepth 1 -type d | cut -c 3-))
+projs=($(find . -not -name ".*" -maxdepth 1 -type d | cut -c 3-))
 # export projects from DB
 for proj in ${projs[@]}
 do
 	logname="$proj-COMMIT-$datetime.log"
 	cmd.exe /c "PSIDE.EXE -HIDE -PJTF $proj -FP . -CT ORACLE -CD $PS_PROJ_DB -CO $PS_PROJ_USER -CP $PS_PROJ_PASS -QUIT -LF ../../logs/$logname"
+	echo "  Project $proj exported."
 done
 
 # set flag for post-commit
 echo 
-touch .commit 
+touch .commit
+echo "Export completed"
+echo ""
 exit
