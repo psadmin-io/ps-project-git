@@ -1,10 +1,26 @@
 #!/bin/sh
 
 # vars
-. config.sh
-datetime=""
-prjname="IO_IBSRVOPP_ACM"
-logname="$prjname-MERGE-$datetime.log"
+datetime="todo"
+logpath=".gitpsoft/logs"
+if [ -z "$PS_PROJ_USER" ]; then
+	echo "Variable PS_PROJ_USER is not set, using default value."
+	PS_PROJ_USER="PS"
+fi
+if [ -z "$PS_PROJ_PASS" ]; then
+	echo "Variable PS_PROJ_PASS is not set, using default value."
+	PS_PROJ_PASS="PS"
+fi
+if [ -z "$PS_PROJ_DB" ]; then
+	echo "Variable PS_PROJ_DB is not set, using default value."
+	PS_PROJ_DB="PSFTDB"
+fi
 
-# import project into DB
-cmd.exe /c "PSIDE.EXE -HIDE -PJFF $prjname -FP ./projects -CT ORACLE -CD PSFTDB -CO $PS_PROJ_USER -CP $PS_PROJ_PASS -QUIT -LF .logs/$logname"
+# find project dirs
+projs=($(find . -maxdepth 1 -type d | cut -c 3-))
+# import projects into DB
+for proj in ${projs[@]}
+do
+	logname="$proj-MERGE-$datetime.log"
+	cmd.exe /c "PSIDE.EXE -HIDE -PJFF $proj -FP . -CT ORACLE -CD $PS_PROJ_DB -CO $PS_PROJ_USER -CP $PS_PROJ_PASS -QUIT -LF $logpath/$logname"
+done

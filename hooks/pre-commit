@@ -1,16 +1,36 @@
 #!/bin/sh
 
+echo "Exporting projects from DB into repo"
+echo ""
 # vars
-datetime=$(date)
-PS_PROJ_USER="PS"
-PS_PROJ_PASS="PS"
-proj="IO_TEST"
-logname="$proj-COMMIT-$datetime.log"
+datetime="todo"
+logpath=".gitpsoft/logs"
+if [ -z "$PS_PROJ_USER" ]; then
+	PS_PROJ_USER="PS"
+	echo "  Variable PS_PROJ_USER is not set, using default value '$PS_PROJ_USER'."
+fi
+if [ -z "$PS_PROJ_PASS" ]; then
+	PS_PROJ_PASS="PS"
+	echo "  Variable PS_PROJ_PASS is not set, using default value '$PS_PROJ_PASS'."
+fi
+if [ -z "$PS_PROJ_DB" ]; then
+	PS_PROJ_DB="PSFTDB"
+	echo "  Variable PS_PROJ_DB is not set, using default value '$PS_PROJ_DB'."
+fi
 
-# export project from DB
-cmd.exe /c "PSIDE.EXE -HIDE -PJTF $proj -FP ../ -CT ORACLE -CD PSFTDB -CO $PS_PROJ_USER -CP $PS_PROJ_PASS -QUIT -LF ../logs/$logname"
+# find project dirs
+projs=($(find . -not -name ".*" -maxdepth 1 -type d | cut -c 3-))
+# export projects from DB
+for proj in ${projs[@]}
+do
+	logname="$proj-COMMIT-$datetime.log"
+	cmd.exe /c "PSIDE.EXE -HIDE -PJTF $proj -FP . -CT ORACLE -CD $PS_PROJ_DB -CO $PS_PROJ_USER -CP $PS_PROJ_PASS -QUIT -LF $logpath/$logname"
+	echo "  Project $proj exported."
+done
 
 # set flag for post-commit
 echo 
-touch .commit 
+touch .commit
+echo "Export completed"
+echo ""
 exit
