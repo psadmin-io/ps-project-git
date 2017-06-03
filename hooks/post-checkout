@@ -1,27 +1,27 @@
 #!/bin/sh
 
-echo "Importing projects to database..."
 # vars
 datetime="todo"
 logpath=".gitpsoft/logs"
 branch=$(git branch | grep '*' | sed 's/* //') 
 PS_PROJ_DB="$branch"
-echo "DB name: $branch"
+exec < /dev/tty
+read -p "Import projects into DB '$branch'? " import
+if [[ $import =~ ^[Nn]$ ]]; then
+	exit
+fi
 if [ -z "$PS_PROJ_USER" ]; then
-	exec < /dev/tty
-	read -p "DB user: " PS_PROJ_USER
+	read -p "PS_PROJ_USER: " PS_PROJ_USER
 fi
 if [ -z "$PS_PROJ_PASS" ]; then
-	exec < /dev/tty
-	read -s -p "DB password: " PS_PROJ_PASS
+	read -s -p "PS_PROJ_PASS: " PS_PROJ_PASS
 fi
-
 
 # find project dirs
 projs=($(find . -maxdepth 1 -type d | cut -c 3-))
 # import projects into DB
 for proj in ${projs[@]}
 do
-	logname="$proj-MERGE-$datetime.log"
+	logname="$proj-CHECKOUT-$datetime.log"
 	cmd.exe /c "PSIDE.EXE -HIDE -PJFF $proj -FP . -CT ORACLE -CD $PS_PROJ_DB -CO $PS_PROJ_USER -CP $PS_PROJ_PASS -QUIT -LF $logpath/$logname"
 done
