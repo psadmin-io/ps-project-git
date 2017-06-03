@@ -1,20 +1,21 @@
 #!/bin/sh
 
+echo "Importing projects to database..."
 # vars
 datetime="todo"
 logpath=".gitpsoft/logs"
+branch=$(git branch | grep '*' | sed 's/* //') 
+PS_PROJ_DB="$branch"
+echo "DB name: $branch"
 if [ -z "$PS_PROJ_USER" ]; then
-	echo "Variable PS_PROJ_USER is not set, using default value."
-	PS_PROJ_USER="PS"
+	exec < /dev/tty
+	read -p "DB user: " PS_PROJ_USER
 fi
 if [ -z "$PS_PROJ_PASS" ]; then
-	echo "Variable PS_PROJ_PASS is not set, using default value."
-	PS_PROJ_PASS="PS"
+	exec < /dev/tty
+	read -s -p "DB password: " PS_PROJ_PASS
 fi
-if [ -z "$PS_PROJ_DB" ]; then
-	echo "Variable PS_PROJ_DB is not set, using default value."
-	PS_PROJ_DB="PSFTDB"
-fi
+
 
 # find project dirs
 projs=($(find . -maxdepth 1 -type d | cut -c 3-))
