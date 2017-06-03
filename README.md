@@ -11,15 +11,17 @@ git submodule add https://github.com/psadmin-io/ps-project-git.git .gitpsoft
 cd .gitpsoft && ./make.ps1 && cd ..
 ```
 # Export
-A `commit` exports projects from the DB matching the current branch name.
+A `commit` gives the option for exporting projects from the DB. The current `branch` name will be used as the DB name.
 ```
 mkdir PROJ_NAME
-git checkout -b DB_NAME
+git checkout -b db-name
 git commit --allow-empty -m "init"
 ```
 # Import
-A `merge` imports projects to the DB matching the current branch name.
+A `checkout` gives the option for importing projects into the DB. The `branch` name you are checking out will be used as the DB name.
 ```
-git checkout -b psftdb
-git merge master
+git checkout source-branch
+# point db-name -> source-branch
+git branch -f db-name source-branch
+git checkout db-name
 ```
