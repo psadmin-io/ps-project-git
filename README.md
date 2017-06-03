@@ -4,7 +4,7 @@ generate symlinks to the projects repository hooks directory. It is designed to 
 
 # Setup
 This is an example of how to setup this as a submodule.
-* `mkdir c:\io-test && cd c:\tio-test`
+* `mkdir c:\io-test && cd c:\io-test`
 * `git init`
 * `git submodule add https://github.com/psadmin-io/ps-project-git.git .gitpsoft`
 * `cd .gitpsoft && ./make.ps1 && cd ..`
