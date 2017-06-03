@@ -1,18 +1,20 @@
 #!/bin/sh
 
-echo "Exporting projects from database..."
 # vars
 datetime="todo"
 logpath=".gitpsoft/logs"
 branch=$(git branch | grep '*' | sed 's/* //') 
 PS_PROJ_DB="$branch"
-echo "DB name: $branch"
+exec < /dev/tty
+read -p "Import projects into '$branch'? " import
+if [[ $import =~ ^[Nn]$ ]]; then
+	exit
+fi
+
 if [ -z "$PS_PROJ_USER" ]; then
-	exec < /dev/tty
 	read -p "DB user: " PS_PROJ_USER
 fi
 if [ -z "$PS_PROJ_PASS" ]; then
-	exec < /dev/tty
 	read -s -p "DB password: " PS_PROJ_PASS
 fi
 
