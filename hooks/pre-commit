@@ -1,25 +1,23 @@
 #!/bin/sh
 
-echo "Exporting projects from DB into repo"
-echo ""
+echo "Exporting projects from database..."
 # vars
 datetime="todo"
 logpath=".gitpsoft/logs"
+branch=$(git branch | grep '*' | sed 's/* //') 
+PS_PROJ_DB="$branch"
+echo "DB name: $branch"
 if [ -z "$PS_PROJ_USER" ]; then
-	PS_PROJ_USER="PS"
-	echo "  Variable PS_PROJ_USER is not set, using default value '$PS_PROJ_USER'."
+	exec < /dev/tty
+	read -p "DB user: " PS_PROJ_USER
 fi
 if [ -z "$PS_PROJ_PASS" ]; then
-	PS_PROJ_PASS="PS"
-	echo "  Variable PS_PROJ_PASS is not set, using default value '$PS_PROJ_PASS'."
-fi
-if [ -z "$PS_PROJ_DB" ]; then
-	PS_PROJ_DB="PSFTDB"
-	echo "  Variable PS_PROJ_DB is not set, using default value '$PS_PROJ_DB'."
+	exec < /dev/tty
+	read -s -p "DB password: " PS_PROJ_PASS
 fi
 
 # find project dirs
-projs=($(find . -not -name ".*" -maxdepth 1 -type d | cut -c 3-))
+projs=($(find .  -maxdepth 1 -not -name ".*" -type d | cut -c 3-))
 # export projects from DB
 for proj in ${projs[@]}
 do
