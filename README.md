@@ -4,16 +4,22 @@ generate symlinks to the projects repository hooks directory. It is designed to 
 
 # Setup
 This is an example of how to setup this as a submodule.
-* `mkdir c:\io-test && cd c:\io-test`
-* `git init`
-* `git submodule add https://github.com/psadmin-io/ps-project-git.git .gitpsoft`
-* `cd .gitpsoft && ./make.ps1 && cd ..`
+```
+mkdir c:\io-test && cd c:\io-test
+git init
+git submodule add https://github.com/psadmin-io/ps-project-git.git .gitpsoft
+cd .gitpsoft && ./make.ps1 && cd ..
+```
 # Export
 A `commit` exports projects from the DB matching the current branch name.
-* `mkdir PROJ_NAME`
-* `git checkout -b DB_NAME`
-* `git commit --allow-empty -m "init"`
+```
+mkdir PROJ_NAME
+git checkout -b DB_NAME
+git commit --allow-empty -m "init"
+```
 # Import
 A `merge` imports projects to the DB matching the current branch name.
-* `git checkout -b psftdb`
-* `git merge master`
+```
+git checkout -b psftdb
+git merge master
+```
