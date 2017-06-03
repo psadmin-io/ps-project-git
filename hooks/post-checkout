@@ -10,14 +10,12 @@ read -p "Import projects into DB '$branch'? " import
 if [[ $import =~ ^[Nn]$ ]]; then
 	exit
 fi
-
 if [ -z "$PS_PROJ_USER" ]; then
-	read -p "DB user: " PS_PROJ_USER
+	read -p "PS_PROJ_USER: " PS_PROJ_USER
 fi
 if [ -z "$PS_PROJ_PASS" ]; then
-	read -s -p "DB password: " PS_PROJ_PASS
+	read -s -p "PS_PROJ_PASS: " PS_PROJ_PASS
 fi
-
 
 # find project dirs
 projs=($(find . -maxdepth 1 -type d | cut -c 3-))
