@@ -6,8 +6,8 @@ logpath=".gitpsoft/logs"
 branch=$(git branch | grep '*' | sed 's/* //') 
 PS_PROJ_DB="$branch"
 exec < /dev/tty
-read -p "Import projects into '$branch'? " import
-if [[ $import =~ ^[Nn]$ ]]; then
+read -p "Export projects to '$branch' branch? " exportconfirm
+if [[ $exportconfirm =~ ^[Nn]$ ]]; then
 	exit
 fi
 if [ -z "$PS_PROJ_USER" ]; then
